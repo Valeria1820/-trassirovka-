@@ -128,7 +128,6 @@ int main() {
 
     std::vector<Light>  lights;
     lights.push_back(Light(Vec3f(-20, 20, 20), 1.6));
-   //lights.push_back(Light(Vec3f(30, 20, 30), 1.7));
 
     render(spheres, lights);
 
