@@ -8,13 +8,13 @@
 #include <algorithm>
 #include "geometry.h"
 
-//--------------------Создание структуры, реализующей освещение---------------------------------------
+//--------------------Структура, реализующая освещение---------------------------------------
 struct Light {
     Light(const Vec3f& p, const float i) : position(p), intensity(i) {}
     Vec3f position;
     float intensity;
 };
-//--------------------Создание структуры, реализующей материал, из который состоят наши шарики--------
+//--------------------Структура, реализующая материалы, из который состоят шары--------
 struct Material {
     Material(const Vec3f& color) :   diffuse_color(color) {}
     Material() :  diffuse_color() {}
