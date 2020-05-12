@@ -8,20 +8,20 @@
 #include <algorithm>
 #include "geometry.h"
 
-//--------------------Создание структуры, реализующей освещение---------------------------------------
+//----------------------------Структура (освещение)---------------------------------------
 struct Light {
     Light(const Vec3f& p, const float i) : position(p), intensity(i) {}
     Vec3f position;
     float intensity;
 };
-//--------------------Создание структуры, реализующей материал, из который состоят наши шарики--------
+//--------------------Структура (материал, из которого состоят шары)----------------------
 struct Material {
     Material(const Vec3f& color) :   diffuse_color(color) {}
     Material() :  diffuse_color() {}
     Vec3f diffuse_color;
    
 };
-//-------------------Структура, отвечающая за отрисовку сферы--------------------------------------------
+//-------------------Структура (рисование сферы)------------------------------------------
 struct Sphere {
     Vec3f center;
     float radius;
@@ -94,13 +94,13 @@ void render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights
     for (size_t j = 0; j < height; j++) { // actual rendering loop
         for (size_t i = 0; i < width; i++) {
             float dir_x = (i + 0.5) - width / 2.;
-            float dir_y = -(j + 0.5) + height / 2.;    // this flips the image at the same time
+            float dir_y = -(j + 0.5) + height / 2.;    // flips the image at the same time
             float dir_z = -height / (2. * tan(fov / 2.));
             framebuffer[i + j * width] = cast_ray(Vec3f(0, 0, 0), Vec3f(dir_x, dir_y, dir_z).normalize(), spheres, lights);
         }
     }
 
-    std::ofstream ofs; // Save file
+    std::ofstream ofs; // save file
     ofs.open("./out.ppm", std::ios::binary);
     ofs << "P6\n" << width << " " << height << "\n255\n";
     for (size_t i = 0; i < height * width; ++i) {
