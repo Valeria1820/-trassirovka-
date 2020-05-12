@@ -8,20 +8,20 @@
 #include <algorithm>
 #include "geometry.h"
 
-//--------------------Структура, реализующая освещение---------------------------------------
+//--------------------Создание структуры, реализующей освещение---------------------------------------
 struct Light {
     Light(const Vec3f& p, const float i) : position(p), intensity(i) {}
     Vec3f position;
     float intensity;
 };
-//--------------------Структура, реализующая материалы, из который состоят шары--------
+//--------------------Создание структуры, реализующей материал, из который состоят наши шарики--------
 struct Material {
     Material(const Vec3f& color) :   diffuse_color(color) {}
     Material() :  diffuse_color() {}
     Vec3f diffuse_color;
    
 };
-//-------------------Структура, отвечающая за рисование сферы--------------------------------------------
+//-------------------Структура, отвечающая за отрисовку сферы--------------------------------------------
 struct Sphere {
     Vec3f center;
     float radius;
@@ -63,7 +63,7 @@ Vec3f cast_ray(const Vec3f& orig, const Vec3f& dir, const std::vector<Sphere>& s
     Material material;
 
     if (depth > 4 || !scene_intersect(dir, spheres, point, N, material)) {
-        return Vec3f(0.3, 0, 0.3); // background color
+        return Vec3f(0.3, 0.2, 0.5); // background color
     }
 
 
@@ -85,8 +85,8 @@ Vec3f cast_ray(const Vec3f& orig, const Vec3f& dir, const std::vector<Sphere>& s
 }
 
 void render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
-    const int   width = 1024;
-    const int   height = 768;
+    const int   width = 1000;
+    const int   height = 798;
     const float fov = M_PI / 3.;
     std::vector<Vec3f> framebuffer(width * height);
 
@@ -115,21 +115,20 @@ void render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights
 }
 
 int main() {
-    Material      ivory( Vec3f(0.5, 0.1, 0.4));
+    Material      ivory( Vec3f(0.4, 0.2, 0.1));
   
-    Material indigo( Vec3f(0.4, 0.4, 0.4));
+    Material indigo( Vec3f(0.4, 0.5, 0.8));
 
 
     std::vector<Sphere> spheres;
-    spheres.push_back(Sphere(Vec3f(-3, 0, -16), 2, ivory));
+    spheres.push_back(Sphere(Vec3f(-3, -2, -10), 2, ivory));
    
     spheres.push_back(Sphere(Vec3f(2, -0.5, -18), 3, indigo));
   
 
     std::vector<Light>  lights;
-    lights.push_back(Light(Vec3f(-20, 20, 20), 1.5));
-  // lights.push_back(Light(Vec3f(30, 50, -25), 1.8));
-   // lights.push_back(Light(Vec3f(30, 20, 30), 1.7));
+    lights.push_back(Light(Vec3f(-20, 20, 20), 1.6));
+   //lights.push_back(Light(Vec3f(30, 20, 30), 1.7));
 
     render(spheres, lights);
 
